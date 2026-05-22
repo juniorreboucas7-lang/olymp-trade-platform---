@@ -22,12 +22,12 @@ Certifique-se de ter instalado em seu PC:
    ```bash
    pip install -r requirements.txt
    ```
-4. Inicialize o Banco de Dados e o Usuário Admin:
+4. Inicialize o Banco de Dados (Opcional, o sistema faz automático no início):
    ```bash
    python init_db.py
    python create_admin.py
    ```
-   *O usuário padrão será `admin` com a senha `admin123`.*
+   *O usuário padrão é `admin` com a senha `admin123`.*
 5. Inicie o servidor:
    ```bash
    python -m uvicorn app.main:app --reload

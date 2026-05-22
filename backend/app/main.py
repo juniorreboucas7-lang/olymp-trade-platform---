@@ -4,8 +4,28 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from . import auth, models, schemas, database
 from .routers import clients, properties, services, finance, documents
+from .database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="2F Consultoria API")
+
+# Create default admin if not exists
+@app.on_event("startup")
+def startup_event():
+    db = SessionLocal()
+    admin = db.query(models.User).filter(models.User.username == "admin").first()
+    if not admin:
+        hashed_password = auth.get_password_hash("admin123")
+        admin = models.User(
+            username="admin",
+            hashed_password=hashed_password,
+            full_name="Administrador do Sistema",
+            role=models.UserRole.ADMIN
+        )
+        db.add(admin)
+        db.commit()
+    db.close()
 
 app.include_router(clients.router)
 app.include_router(properties.router)
