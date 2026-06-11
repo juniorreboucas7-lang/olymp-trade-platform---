@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-electron/
+.env
+backend/.env
+*.log
+__pycache__/
+*.db
+.pytest_cache/
+venv/
+.DS_Store
+backend/app/templates/*.pdf
